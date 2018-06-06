@@ -44,7 +44,7 @@ glyph.SetInputData(linesPolyData)
 glyph.SetSourceConnection(0, sphere.GetOutputPort())
 glyph.SetScaleFactor(0.5)
 
-colorTransferFunction = vtk.vtkColorTransferFunction()
+colorTransferFunction = vtkColorTransferFunction()
 colorTransferFunction.SetColorSpaceToRGB()
 colorTransferFunction.AddRGBPoint(0.37,1,1,1)
 colorTransferFunction.AddRGBPoint(0.68,1,0,0)
@@ -71,39 +71,39 @@ actorAtoms.GetProperty().SetDiffuse(1)
 
 #Mapper 2
 
-tubeFilter = vtk.vtkTubeFilter()
+tubeFilter = vtkTubeFilter()
 tubeFilter.SetInputData(linesPolyData)
 tubeFilter.SetNumberOfSides(5);
 tubeFilter.SetVaryRadiusToVaryRadiusOff()
 tubeFilter.SetRadius(0.1)
 
-colorTransferFunctionTube = vtk.vtkColorTransferFunction()
+colorTransferFunctionTube = vtkColorTransferFunction()
 colorTransferFunctionTube.SetColorSpaceToRGB()
 colorTransferFunctionTube.AddRGBPoint(0,1,1,1)
 colorTransferFunctionTube.AddRGBPoint(2000,1,1,1)
 colorTransferFunctionTube.SetScaleToLinear()
 
-tubeMapper = vtk.vtkPolyDataMapper()
+tubeMapper = vtkPolyDataMapper()
 tubeMapper.SetInputConnection(tubeFilter.GetOutputPort())
 tubeMapper.SetLookupTable(colorTransferFunctionTube)
 
 #Actor 2
 
-actorTube = vtk.vtkActor()
+actorTube = vtkActor()
 actorTube.SetMapper(tubeMapper)
 actorTube.VisibilityOn()
 
 
 #Mapper 3
 
-outline = vtk.vtkOutlineFilter()
+outline = vtkOutlineFilter()
 outline.SetInputData(linesPolyData)
 
-mapperOutline = vtk.vtkPolyDataMapper()
+mapperOutline = vtkPolyDataMapper()
 mapperOutline.SetInputConnection(outline.GetOutputPort())
 
 #Actor 3
-actorOutline = vtk.vtkActor()
+actorOutline = vtkActor()
 actorOutline.GetProperty().SetColor(0, 0, 0)
 actorOutline.SetMapper(mapperOutline)
 
@@ -111,31 +111,31 @@ actorOutline.SetMapper(mapperOutline)
 #Renderer
 
 renderer = vtkRenderer()
+
 renderer.AddActor(actorAtoms)
 renderer.AddActor(actorTube)
 renderer.AddActor(actorOutline)
+
 renderer.SetBackground(0.4,0.4,0.4)
 renderer.ResetCameraClippingRange()
 renderer.ResetCamera();
 renderer.GetActiveCamera().Zoom(1)
+
 #zoom
 
 
 #Render Window
 
 renderWin = vtkRenderWindow()
-renderWin.SetWindowName("Ejercicio 0")
+renderWin.SetWindowName("Ejercicio 1 - Dinamica Molecular")
 renderWin.SetSize(640, 480)
 
 renderWin.AddRenderer(renderer)
-
-#random.uniform(1.5, 1.9)
 
 #Interactor
 interactor = vtkRenderWindowInteractor()
 interactor.SetRenderWindow(renderWin)
 interactor.SetInteractorStyle(vtkInteractorStyleTrackballCamera())
-#interactor.AddObserver("LeftButtonPressEvent", OnLeftClick)
 
 #Initialize
 interactor.Start()
